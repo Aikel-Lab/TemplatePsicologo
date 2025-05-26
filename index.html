@@ -120,8 +120,8 @@
 </head>
 <body class="transition-colors duration-300 min-h-screen relative bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
     <!-- WhatsApp Button -->
-    <a href="https://wa.me/39123456789" target="_blank" class="whatsapp-button breathing">
-        <i class="fab fa-whatsapp text-2xl"></i>
+    <a href="https://wa.me/393209044901" target="_blank" class="whatsapp-button breathing">
+        <i class="fab fa-whatsapp text-3xl"></i>
     </a>
 
     <!-- Back to top button -->
@@ -134,7 +134,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="../index.html" class="text-sky-600 dark:text-sky-400 font-semibold text-lg flex items-center">
+                    <a href="https://sitomainportfolio.netlify.app" class="text-sky-600 dark:text-sky-400 font-semibold text-lg flex items-center">
                         <i class="fas fa-home mr-2"></i> Torna alla Home
                     </a>
                 </div>
@@ -194,7 +194,8 @@
                     Prenota
                 </a>
                 <a href="#testimonials"
-                   class="flex items-center gap-3 px-4 py-3 rounded-xl text-base font-semibold text-yellow-700 dark:text-yellow-300 bg-yellow-50 dark:bg-slate-700 hover:bg-yellow-100 dark:hover:bg-yellow-900 shadow-sm transition-all mt-2">
+                   class="chip-breath flex items-center gap-3 px-4 py-3 rounded-xl text-base font-semibold text-yellow-700 dark:text-yellow-300 bg-yellow-50 dark:bg-slate-700 hover:bg-yellow-100 dark:hover:bg-yellow-900 shadow-sm transition-all mt-2"
+                   style="animation: chip-breathing 3.2s cubic-bezier(.4,0,.2,1) infinite;">
                     <i class="fas fa-star"></i>
                     Recensioni
                 </a>
@@ -292,8 +293,13 @@
                         <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Consulenza Conoscitiva</h3>
                         <p class="text-gray-600 dark:text-gray-300 mb-4">Un primo incontro di 30 minuti per conoscersi e valutare insieme il percorso più adatto alle tue esigenze.</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-blue-600 dark:text-blue-400 font-medium">€30/sessione</span>
-                            <a href="#contact" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium flex items-center prenota-link">
+                            <div class="flex items-center">
+                                <span class="session-price blur-sm select-none transition-all duration-300 text-sky-600 dark:text-sky-400 font-medium">€30/sessione</span>
+                                <button type="button" class="toggle-price ml-1 text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 focus:outline-none" aria-label="Mostra prezzo">
+                                    <i class="fas fa-eye-slash"></i>
+                                </button>
+                            </div>
+                            <a href="#contact" class="text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 font-medium flex items-center prenota-link">
                                 Prenota <i class="fas fa-arrow-right ml-1"></i>
                             </a>
                         </div>
@@ -309,7 +315,12 @@
                         <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-3">Percorso Individuale</h3>
                         <p class="text-slate-600 dark:text-slate-300 mb-4">Un percorso personalizzato per affrontare ansia, depressione, stress e altre difficoltà emotive. Sessioni of 60 minuti.</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-sky-600 dark:text-sky-400 font-medium">€70/sessione</span>
+                            <div class="flex items-center">
+                                <span class="session-price blur-sm select-none transition-all duration-300 text-sky-600 dark:text-sky-400 font-medium">€70/sessione</span>
+                                <button type="button" class="toggle-price ml-1 text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 focus:outline-none" aria-label="Mostra prezzo">
+                                    <i class="fas fa-eye-slash"></i>
+                                </button>
+                            </div>
                             <a href="#contact" class="text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 font-medium flex items-center prenota-link">
                                 Prenota <i class="fas fa-arrow-right ml-1"></i>
                             </a>
@@ -326,7 +337,12 @@
                         <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-3">Percorso di Coppia</h3>
                         <p class="text-slate-600 dark:text-slate-300 mb-4">Supporto per migliorare la comunicazione, risolvere conflitti e ritrovare l'armonia nella relazione. Sessioni di 60 minuti.</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-sky-600 dark:text-sky-400 font-medium">€90/sessione</span>
+                            <div class="flex items-center">
+                                <span class="session-price blur-sm select-none transition-all duration-300 text-sky-600 dark:text-sky-400 font-medium">€90/sessione</span>
+                                <button type="button" class="toggle-price ml-1 text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 focus:outline-none" aria-label="Mostra prezzo">
+                                    <i class="fas fa-eye-slash"></i>
+                                </button>
+                            </div>
                             <a href="#contact" class="text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 font-medium flex items-center prenota-link">
                                 Prenota <i class="fas fa-arrow-right ml-1"></i>
                             </a>
@@ -343,7 +359,12 @@
                         <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-3">Counseling</h3>
                         <p class="text-slate-600 dark:text-slate-300 mb-4">Supporto psicologico breve e mirato per affrontare momenti di difficoltà o transizione. Sessioni di 40 minuti.</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-sky-600 dark:text-sky-400 font-medium">€50/sessione</span>
+                            <div class="flex items-center">
+                                <span class="session-price blur-sm select-none transition-all duration-300 text-sky-600 dark:text-sky-400 font-medium">€50/sessione</span>
+                                <button type="button" class="toggle-price ml-1 text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 focus:outline-none" aria-label="Mostra prezzo">
+                                    <i class="fas fa-eye-slash"></i>
+                                </button>
+                            </div>
                             <a href="#contact" class="text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 font-medium flex items-center prenota-link">
                                 Prenota <i class="fas fa-arrow-right ml-1"></i>
                             </a>
@@ -360,7 +381,12 @@
                         <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-3">Pacchetto 5 Sedute</h3>
                         <p class="text-slate-600 dark:text-slate-300 mb-4">Percorso strutturato di 5 sedute individuali con pagamento anticipato. Sconto del 7% rispetto al prezzo singolo.</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-sky-600 dark:text-sky-400 font-medium">€325 (€65/seduta)</span>
+                            <div class="flex items-center">
+                                <span class="session-price blur-sm select-none transition-all duration-300 text-sky-600 dark:text-sky-400 font-medium">€325 (€65/seduta)</span>
+                                <button type="button" class="toggle-price ml-1 text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 focus:outline-none" aria-label="Mostra prezzo">
+                                    <i class="fas fa-eye-slash"></i>
+                                </button>
+                            </div>
                             <a href="#contact" class="text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 font-medium flex items-center prenota-link">
                                 Prenota <i class="fas fa-arrow-right ml-1"></i>
                             </a>
@@ -377,7 +403,12 @@
                         <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-3">Pacchetto 10 Sedute</h3>
                         <p class="text-slate-600 dark:text-slate-300 mb-4">Percorso completo di 10 sedute individuali con pagamento anticipato. Sconto del 14% rispetto al prezzo singolo.</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-sky-600 dark:text-sky-400 font-medium">€600 (€60/seduta)</span>
+                            <div class="flex items-center">
+                                <span class="session-price blur-sm select-none transition-all duration-300 text-sky-600 dark:text-sky-400 font-medium">€600 (€60/seduta)</span>
+                                <button type="button" class="toggle-price ml-1 text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 focus:outline-none" aria-label="Mostra prezzo">
+                                    <i class="fas fa-eye-slash"></i>
+                                </button>
+                            </div>
                             <a href="#contact" class="text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 font-medium flex items-center prenota-link">
                                 Prenota <i class="fas fa-arrow-right ml-1"></i>
                             </a>
@@ -1055,6 +1086,24 @@
         }
         isSwiping = false;
         deltaX = 0;
+    });
+
+    document.querySelectorAll('.toggle-price').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const price = this.parentElement.querySelector('.session-price');
+            const icon = this.querySelector('i');
+            if (price.classList.contains('blur-sm')) {
+                price.classList.remove('blur-sm');
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+                this.setAttribute('aria-label', 'Nascondi prezzo');
+            } else {
+                price.classList.add('blur-sm');
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+                this.setAttribute('aria-label', 'Mostra prezzo');
+            }
+        });
     });
     </script>
 </body>
