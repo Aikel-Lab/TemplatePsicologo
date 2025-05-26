@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio Psicologico Dott. Matteo Neri</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3B82F6;
+            --secondary: #10B981;
+            --dark: #1F2937;
+            --light: #F3F4F6;
+        }
+        .wave-bg .shape-fill {
+            fill: var(--primary);
+        }
+        .dark .wave-bg .shape-fill {
+            fill: var(--dark);
+        }
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .fade-in {
+            animation: fadeIn 1.5s ease-in;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .whatsapp-button {
+            position: fixed;
+            bottom: 1.5rem; /* Abbassato: ora è alla stessa altezza del tasto torna su */
+            right: 1.5rem;
+            background-color: #10B981;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+            z-index: 50;
+            transition: background 0.3s, box-shadow 0.3s;
+            animation: breathing-shadow 4s cubic-bezier(.4,0,.2,1) infinite;
+        }
+        @keyframes breathing-shadow {
+            0%   { box-shadow: 0 0 0 0 rgba(16,185,129,0.25), 0 4px 16px rgba(0,0,0,0.18);}
+            50%  { box-shadow: 0 0 0 18px rgba(16,185,129,0.10), 0 4px 24px rgba(0,0,0,0.20);}
+            100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.25), 0 4px 16px rgba(0,0,0,0.18);}
+        }
+        .whatsapp-button:hover {
+            background-color: #059669;
+            box-shadow: 0 0 0 10px rgba(16,185,129,0.13), 0 8px 24px rgba(0,0,0,0.22);
+        }
+        .chip-breath {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            box-shadow: 0 2px 8px 0 rgba(56,189,248,0.10);
+            border: 1px solid #bae6fd;
+            transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+        }
+        .dark .chip-breath {
+            background-color: #1e293b;
+            color: #38bdf8;
+            border-color: #334155;
+        }
+        .chip-breath:hover {
+            background-color: #bae6fd;
+            color: #0ea5e9;
+            box-shadow: 0 0 0 10px rgba(56,189,248,0.10), 0 8px 24px rgba(56,189,248,0.13);
+            transform: scale(1.05);
+        }
+        @keyframes chip-breathing {
+            0%   { box-shadow: 0 0 0 0 rgba(56,189,248,0.18), 0 2px 8px 0 rgba(56,189,248,0.10);}
+            50%  { box-shadow: 0 0 0 14px rgba(56,189,248,0.09), 0 4px 16px 0 rgba(56,189,248,0.13);}
+            100% { box-shadow: 0 0 0 0 rgba(56,189,248,0.18), 0 2px 8px 0 rgba(56,189,248,0.10);}
+        }
+        /* Tasto torna su più grande e animato verso l'alto */
+        #backToTop {
+            width: 52px;
+            height: 52px;
+            font-size: 1.4rem;
+            border-radius: 999px;
+            animation: up-move 3.5s infinite alternate cubic-bezier(.4,0,.2,1);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+            /* Mantiene la coerenza con il tasto WhatsApp */
+        }
+        #backToTop.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+        #backToTop.hide {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(30px);
+        }
+        @keyframes up-move {
+            0% { transform: translateY(0);}
+            100% { transform: translateY(-10px);}
+        }
+    </style>
+</head>
+<body class="transition-colors duration-300 min-h-screen relative bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/39123456789" target="_blank" class="whatsapp-button breathing">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <!-- Back to top button -->
+    <button id="backToTop" class="fixed bottom-6 left-6 bg-sky-600 hover:bg-sky-700 text-white rounded-full shadow-lg z-50 transition-all duration-300 flex items-center justify-center">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Navigation -->
+    <nav class="bg-white/90 dark:bg-slate-900/90 shadow-sm fixed w-full z-40 border-b border-slate-200 dark:border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="../index.html" class="text-sky-600 dark:text-sky-400 font-semibold text-lg flex items-center">
+                        <i class="fas fa-home mr-2"></i> Torna alla Home
+                    </a>
+                </div>
+                <!-- NAVBAR DESKTOP -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-center space-x-4">
+                        <a href="#about" class="border border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-slate-200 px-3 py-2 rounded-full text-sm font-medium transition-colors shadow-sm">Chi sono</a>
+                        <a href="#services" class="border border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-slate-200 px-3 py-2 rounded-full text-sm font-medium transition-colors shadow-sm">Servizi</a>
+                        <a href="#approach" class="border border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-slate-200 px-3 py-2 rounded-full text-sm font-medium transition-colors shadow-sm">Approccio</a>
+                        <a href="#contact" class="border border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-slate-200 px-3 py-2 rounded-full text-sm font-medium transition-colors shadow-sm">Contatti</a>
+                        <a href="#prenota" class="border border-sky-300 dark:border-sky-700 bg-sky-100 dark:bg-sky-900 hover:bg-sky-200 dark:hover:bg-sky-800 text-sky-700 dark:text-sky-300 px-3 py-2 rounded-full text-sm font-semibold transition-colors shadow-sm">Prenota</a>
+                        <a href="#testimonials" class="chip-breath px-4 py-1.5 rounded-full text-sm font-semibold flex items-center gap-2 transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400" style="animation: chip-breathing 3.2s cubic-bezier(.4,0,.2,1) infinite;">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            Recensioni
+                        </a>
+                        <button id="themeToggle" class="ml-4 p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-yellow-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-300 flex items-center space-x-2">
+                            <i id="themeIcon" class="fas fa-moon"></i>
+                            <span id="themeText" class="ml-2">Notte</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- MENU MOBILE -->
+                <div class="-mr-2 flex md:hidden items-center">
+                    <span class="mr-2 text-slate-700 dark:text-slate-300 font-medium">Menù</span>
+                    <button id="mobileMenuButton" class="inline-flex items-center justify-center p-2 rounded-md text-slate-700 dark:text-slate-300 hover:text-sky-600 dark:hover:text-sky-400 focus:outline-none">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu overlay: aggiungi top-16 per non coprire la navbar -->
+        <div id="mobileMenuOverlay" class="hidden fixed left-0 right-0 top-16 bottom-0 bg-black/50 backdrop-blur-sm z-40"></div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu"
+             class="hidden md:hidden fixed top-20 right-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 z-50 shadow-2xl rounded-2xl px-4 pt-4 pb-4 sm:px-6 transition-all duration-300"
+             style="min-width: 260px; max-width: 92vw;">
+            <div class="flex flex-col items-stretch gap-2">
+                <a href="#about" class="flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-700 hover:bg-sky-100 dark:hover:bg-sky-900 shadow-sm transition-all">
+                    <i class="fas fa-user-circle text-sky-500 dark:text-sky-400"></i>
+                    Chi sono
+                </a>
+                <a href="#services" class="flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-700 hover:bg-sky-100 dark:hover:bg-sky-900 shadow-sm transition-all">
+                    <i class="fas fa-briefcase text-sky-500 dark:text-sky-400"></i>
+                    Servizi
+                </a>
+                <a href="#approach" class="flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-700 hover:bg-sky-100 dark:hover:bg-sky-900 shadow-sm transition-all">
+                    <i class="fas fa-brain text-sky-500 dark:text-sky-400"></i>
+                    Approccio
+                </a>
+                <a href="#contact" class="flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-700 hover:bg-sky-100 dark:hover:bg-sky-900 shadow-sm transition-all">
+                    <i class="fas fa-envelope text-sky-500 dark:text-sky-400"></i>
+                    Contatti
+                </a>
+                <a href="#prenotaform" class="flex items-center gap-3 px-4 py-3 rounded-xl text-base font-semibold text-white bg-sky-600 hover:bg-sky-700 shadow transition-all">
+                    <i class="fas fa-calendar-check"></i>
+                    Prenota
+                </a>
+                <a href="#testimonials"
+                   class="flex items-center gap-3 px-4 py-3 rounded-xl text-base font-semibold text-yellow-700 dark:text-yellow-300 bg-yellow-50 dark:bg-slate-700 hover:bg-yellow-100 dark:hover:bg-yellow-900 shadow-sm transition-all mt-2">
+                    <i class="fas fa-star"></i>
+                    Recensioni
+                </a>
+                <button id="mobileThemeToggle" class="flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium text-slate-700 dark:text-yellow-300 bg-slate-100 dark:bg-slate-700 hover:bg-sky-100 dark:hover:bg-sky-900 shadow-sm transition-all mt-2">
+                    <i id="mobileThemeIcon" class="fas fa-moon"></i>
+                    <span id="mobileThemeText">Notte</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-bg pt-24 pb-16 md:pt-32 md:pb-24 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:flex md:items-center md:justify-between">
+                <div class="md:w-1/2 mb-10 md:mb-0 fade-in">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">Studio Psicologico</h1>
+                    <h2 class="text-2xl md:text-3xl font-semibold text-sky-700 dark:text-sky-400 mb-6">Dott. Matteo Neri</h2>
+                    <p class="text-lg text-gray-700 dark:text-gray-300 mb-8 max-w-lg">Supporto psicologico personalizzato per ritrovare benessere e equilibrio nella tua vita.</p>
+                    <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                        <a href="#contact" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium text-center shadow-sm transition-colors">Prenota un consulto</a>
+                        <a href="#services" class="bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 text-blue-600 dark:text-blue-400 px-6 py-3 rounded-lg font-medium text-center shadow-sm transition-colors">Scopri i servizi</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center relative">
+                    <div class="relative floating">
+                        <div class="absolute -inset-4 bg-sky-200 dark:bg-sky-900 rounded-full opacity-50 blur-lg"></div>
+                        <img src="https://images.pexels.com/photos/23496452/pexels-photo-23496452/free-photo-of-uomo-persona-persone-donna.jpeg" alt="Studio Psicologico" class="relative rounded-lg h-64 w-full md:h-80 md:w-96 object-cover border-4 border-white dark:border-slate-700 shadow-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 md:py-24 bg-white dark:bg-gray-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-4">Chi sono</h2>
+                <div class="w-20 h-1 bg-blue-500 mx-auto"></div>
+            </div>
+            <div class="md:flex md:items-center md:space-x-12">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <img src="https://www.iamclinic.org/wp-content/uploads/2024/05/mental-health-therapy-denver.png" alt="Studio psicologico" class="rounded-lg shadow-lg w-full h-auto object-cover">
+                </div>
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-semibold text-gray-800 dark:text-white mb-4">Dott. Matteo Neri - Psicologo e Psicoterapeuta</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">Mi sono laureato in Psicologia Clinica presso l'Università di Milano e specializzato in Psicoterapia Cognitivo-Comportamentale. Con oltre 12 anni di esperienza, ho aiutato centinaia di persone a superare difficoltà emotive e ritrovare il proprio equilibrio.</p>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">Credo in un approccio empatico e personalizzato, dove ogni individuo viene accolto nella sua unicità. Il mio obiettivo è creare uno spazio sicuro dove potersi esprimere liberamente e lavorare insieme per raggiungere i propri obiettivi di benessere.</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex items-center">
+                            <div class="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-full mr-3">
+                                <i class="fas fa-graduation-cap text-blue-600 dark:text-blue-400"></i>
+                            </div>
+                            <span class="text-gray-700 dark:text-gray-300 font-medium">Specializzato</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-full mr-3">
+                                <i class="fas fa-heart text-blue-600 dark:text-blue-400"></i>
+                            </div>
+                            <span class="text-gray-700 dark:text-gray-300 font-medium">Empatico</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-full mr-3">
+                                <i class="fas fa-user-shield text-blue-600 dark:text-blue-400"></i>
+                            </div>
+                            <span class="text-gray-700 dark:text-gray-300 font-medium">Riservato</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-full mr-3">
+                                <i class="fas fa-hand-holding-heart text-blue-600 dark:text-blue-400"></i>
+                            </div>
+                            <span class="text-gray-700 dark:text-gray-300 font-medium">Supportivo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 md:py-24 bg-sky-50 dark:bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mb-4">Servizi offerti</h2>
+                <div class="w-20 h-1 bg-sky-500 mx-auto"></div>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg shadow-slate-200 dark:shadow-xl dark:shadow-slate-900 overflow-hidden card-hover transition-all duration-300">
+                    <div class="h-48 bg-blue-100 dark:bg-gray-700 flex items-center justify-center">
+                        <i class="fas fa-clock text-6xl text-blue-600 dark:text-blue-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Consulenza Conoscitiva</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Un primo incontro di 30 minuti per conoscersi e valutare insieme il percorso più adatto alle tue esigenze.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-600 dark:text-blue-400 font-medium">€30/sessione</span>
+                            <a href="#contact" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium flex items-center prenota-link">
+                                Prenota <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="bg-white dark:bg-slate-800 rounded-lg shadow-lg shadow-slate-200 dark:shadow-xl dark:shadow-slate-900 overflow-hidden card-hover">
+                    <div class="h-48 bg-sky-100 dark:bg-slate-700 flex items-center justify-center">
+                        <i class="fas fa-user text-6xl text-sky-600 dark:text-sky-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-3">Percorso Individuale</h3>
+                        <p class="text-slate-600 dark:text-slate-300 mb-4">Un percorso personalizzato per affrontare ansia, depressione, stress e altre difficoltà emotive. Sessioni of 60 minuti.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sky-600 dark:text-sky-400 font-medium">€70/sessione</span>
+                            <a href="#contact" class="text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 font-medium flex items-center prenota-link">
+                                Prenota <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="bg-white dark:bg-slate-800 rounded-lg shadow-lg shadow-slate-200 dark:shadow-xl dark:shadow-slate-900 overflow-hidden card-hover">
+                    <div class="h-48 bg-sky-100 dark:bg-slate-700 flex items-center justify-center">
+                        <i class="fas fa-people-arrows text-6xl text-sky-600 dark:text-sky-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-3">Percorso di Coppia</h3>
+                        <p class="text-slate-600 dark:text-slate-300 mb-4">Supporto per migliorare la comunicazione, risolvere conflitti e ritrovare l'armonia nella relazione. Sessioni di 60 minuti.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sky-600 dark:text-sky-400 font-medium">€90/sessione</span>
+                            <a href="#contact" class="text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 font-medium flex items-center prenota-link">
+                                Prenota <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 4 -->
+                <div class="bg-white dark:bg-slate-800 rounded-lg shadow-lg shadow-slate-200 dark:shadow-xl dark:shadow-slate-900 overflow-hidden card-hover">
+                    <div class="h-48 bg-sky-100 dark:bg-slate-700 flex items-center justify-center">
+                        <i class="fas fa-comments text-6xl text-sky-600 dark:text-sky-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-3">Counseling</h3>
+                        <p class="text-slate-600 dark:text-slate-300 mb-4">Supporto psicologico breve e mirato per affrontare momenti di difficoltà o transizione. Sessioni di 40 minuti.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sky-600 dark:text-sky-400 font-medium">€50/sessione</span>
+                            <a href="#contact" class="text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 font-medium flex items-center prenota-link">
+                                Prenota <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 5 -->
+                <div class="bg-white dark:bg-slate-800 rounded-lg shadow-lg shadow-slate-200 dark:shadow-xl dark:shadow-slate-900 overflow-hidden card-hover">
+                    <div class="h-48 bg-sky-100 dark:bg-slate-700 flex items-center justify-center">
+                        <i class="fas fa-calendar-check text-6xl text-sky-600 dark:text-sky-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-3">Pacchetto 5 Sedute</h3>
+                        <p class="text-slate-600 dark:text-slate-300 mb-4">Percorso strutturato di 5 sedute individuali con pagamento anticipato. Sconto del 7% rispetto al prezzo singolo.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sky-600 dark:text-sky-400 font-medium">€325 (€65/seduta)</span>
+                            <a href="#contact" class="text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 font-medium flex items-center prenota-link">
+                                Prenota <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 6 -->
+                <div class="bg-white dark:bg-slate-800 rounded-lg shadow-lg shadow-slate-200 dark:shadow-xl dark:shadow-slate-900 overflow-hidden card-hover">
+                    <div class="h-48 bg-sky-100 dark:bg-slate-700 flex items-center justify-center">
+                        <i class="fas fa-calendar-check text-6xl text-sky-600 dark:text-sky-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-3">Pacchetto 10 Sedute</h3>
+                        <p class="text-slate-600 dark:text-slate-300 mb-4">Percorso completo di 10 sedute individuali con pagamento anticipato. Sconto del 14% rispetto al prezzo singolo.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sky-600 dark:text-sky-400 font-medium">€600 (€60/seduta)</span>
+                            <a href="#contact" class="text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 font-medium flex items-center prenota-link">
+                                Prenota <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Approach Section -->
+    <section id="approach" class="py-16 md:py-24 bg-white dark:bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mb-4">Il mio approccio</h2>
+                <div class="w-20 h-1 bg-sky-500 mx-auto"></div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Approach 1 -->
+                <div class="bg-white dark:bg-slate-800 rounded-lg shadow-lg shadow-slate-200 dark:shadow-xl dark:shadow-slate-900 p-6 card-hover">
+                    <div class="bg-sky-100 dark:bg-slate-700 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-brain text-sky-600 dark:text-sky-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-3">Cognitivo-Comportamentale</h3>
+                    <p class="text-slate-600 dark:text-slate-300">Un approccio scientifico che aiuta a identificare e modificare pensieri e comportamenti disfunzionali.</p>
+                </div>
+                
+                <!-- Approach 2 -->
+                <div class="bg-white dark:bg-slate-800 rounded-lg shadow-lg shadow-slate-200 dark:shadow-xl dark:shadow-slate-900 p-6 card-hover">
+                    <div class="bg-sky-100 dark:bg-slate-700 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-heart text-sky-600 dark:text-sky-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-3">Centrato sulla persona</h3>
+                    <p class="text-slate-600 dark:text-slate-300">Ascolto attivo e accettazione incondizionata per favorire l'autoconoscenza e la crescita personale.</p>
+                </div>
+                
+                <!-- Approach 3 -->
+                <div class="bg-white dark:bg-slate-800 rounded-lg shadow-lg shadow-slate-200 dark:shadow-xl dark:shadow-slate-900 p-6 card-hover">
+                    <div class="bg-sky-100 dark:bg-slate-700 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-hands-helping text-sky-600 dark:text-sky-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-3">Soluzioni pratiche</h3>
+                    <p class="text-slate-600 dark:text-slate-300">Strategie concrete e strumenti applicabili nella vita quotidiana per affrontare le sfide emotive.</p>
+                </div>
+                
+                <!-- Approach 4 -->
+                <div class="bg-white dark:bg-slate-800 rounded-lg shadow-lg shadow-slate-200 dark:shadow-xl dark:shadow-slate-900 p-6 card-hover">
+                    <div class="bg-sky-100 dark:bg-slate-700 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-seedling text-sky-600 dark:text-sky-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-3">Terapia Dialettico-Comportamentale</h3>
+                    <p class="text-slate-600 dark:text-slate-300">Particolarmente efficace per BPD, aiuta a regolare le emozioni e migliorare le relazioni interpersonali.</p>
+                </div>
+                
+                <!-- Approach 5 -->
+                <div class="bg-white dark:bg-slate-800 rounded-lg shadow-lg shadow-slate-200 dark:shadow-xl dark:shadow-slate-900 p-6 card-hover">
+                    <div class="bg-sky-100 dark:bg-slate-700 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-chart-line text-sky-600 dark:text-sky-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-3">Mindfulness</h3>
+                    <p class="text-slate-600 dark:text-slate-300">Tecniche di consapevolezza per gestire ansia e stress, aumentando la presenza nel qui e ora.</p>
+                </div>
+                
+                <!-- Approach 6 -->
+                <div class="bg-white dark:bg-slate-800 rounded-lg shadow-lg shadow-slate-200 dark:shadow-xl dark:shadow-slate-900 p-6 card-hover">
+                    <div class="bg-sky-100 dark:bg-slate-700 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-lightbulb text-sky-600 dark:text-sky-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-3">Self Improvement</h3>
+                    <p class="text-slate-600 dark:text-slate-300">Percorsi di crescita personale per sviluppare autostima, assertività e raggiungere i propri obiettivi.</p>
+                </div>
+            </div>
+            
+            <div class="mt-16 bg-sky-100 dark:bg-slate-700 rounded-xl p-8 md:p-12 shadow-sm">
+                <div class="md:flex md:items-center md:space-x-8">
+                    <div class="md:w-1/3 mb-6 md:mb-0 flex justify-center">
+                        <div class="bg-white dark:bg-slate-600 p-4 rounded-lg shadow-lg shadow-slate-200 dark:shadow-xl dark:shadow-slate-900">
+                            <img src="https://images.pexels.com/photos/23496452/pexels-photo-23496452/free-photo-of-uomo-persona-persone-donna.jpeg" alt="Studio Psicologico" class="w-full h-auto rounded-lg">
+                        </div>
+                    </div>
+                    <div class="md:w-2/3">
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-4">Terapia anche online</h3>
+                        <p class="text-slate-700 dark:text-slate-300 mb-4">Offro sessioni di psicoterapia online attraverso piattaforme sicure e confidenziali. Un'opzione comoda per chi ha difficoltà a raggiungere lo studio o preferisce la comodità di casa propria.</p>
+                        <div class="flex flex-wrap gap-2 items-center">
+                            <span class="bg-sky-200 dark:bg-slate-900/50 text-sky-800 dark:text-sky-300 px-3 py-1.5 rounded-full text-sm flex items-center justify-center min-h-[40px]">Videochiamata</span>
+                            <span class="bg-sky-200 dark:bg-slate-900/50 text-sky-800 dark:text-sky-300 px-3 py-1.5 rounded-full text-sm flex items-center justify-center min-h-[40px]">Flessibilità oraria</span>
+                            <span class="bg-sky-200 dark:bg-slate-900/50 text-sky-800 dark:text-sky-300 px-3 py-1.5 rounded-full text-sm flex items-center justify-center min-h-[40px]">Stessa qualità</span>
+                            <a href="#contact"
+                               class="chip-breath px-4 py-1.5 rounded-full text-sm font-semibold flex items-center justify-center gap-2 transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400 min-h-[40px]"
+                               style="animation: chip-breathing 3.2s cubic-bezier(.4,0,.2,1) infinite;">
+                                <i class="fas fa-calendar-check text-base"></i>
+                                <span class="chip-breath-text">Prenota ora</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-16 md:py-24 bg-sky-50 dark:bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mb-4">Cosa dicono i pazienti</h2>
+                <div class="w-20 h-1 bg-sky-500 mx-auto"></div>
+            </div>
+            <div class="relative max-w-4xl mx-auto">
+                <!-- Carousel -->
+                <div class="overflow-hidden w-full max-w-[772px] mx-auto relative px-4 sm:px-0">
+                    <div id="testimonial-carousel" class="flex transition-transform duration-700 ease-in-out gap-8 will-change-transform"></div>
+                </div>
+                <!-- Indicatori -->
+                <div class="flex items-center justify-center mt-8 gap-2 relative">
+                    <button id="testimonial-prev" class="bg-white dark:bg-slate-700 text-sky-600 dark:text-sky-400 hover:bg-sky-100 dark:hover:bg-slate-600 rounded-full p-3 shadow-lg z-10 transition-colors mr-2">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div id="testimonial-indicators" class="flex gap-2"></div>
+                    <button id="testimonial-next" class="bg-white dark:bg-slate-700 text-sky-600 dark:text-sky-400 hover:bg-sky-100 dark:hover:bg-slate-600 rounded-full p-3 shadow-lg z-10 transition-colors ml-2">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+    // filepath: c:\Users\Aik2\Desktop\Progetto Sitiweb\TemplatePsicologo\indexpsi.html
+    const testimonials = [
+        { name: "Maria Bianchi", avatar: "https://randomuser.me/api/portraits/women/43.jpg", since: "Paziente dal 2020", text: "Il Dott. Neri mi ha aiutato a superare un periodo molto difficile della mia vita. Il suo approccio empatico e professionale mi ha dato gli strumenti per gestire la mia ansia e ritrovare la serenità. Grazie al supporto ricevuto, sono riuscita a superare momenti di grande difficoltà personale." },
+        { name: "Luigi Verdi", avatar: "https://randomuser.me/api/portraits/men/65.jpg", since: "Paziente dal 2021", text: "Grazie alla terapia di coppia con il Dott. Neri, io e mia moglie abbiamo imparato a comunicare in modo più efficace. La consiglio a tutte le coppie che stanno attraversando un momento difficile." },
+        { name: "Giulia Rossi", avatar: "https://randomuser.me/api/portraits/women/68.jpg", since: "Paziente dal 2022", text: "Ho trovato grande professionalità e umanità. Ogni seduta è stata un passo avanti verso il mio benessere." },
+        { name: "Marco Ferri", avatar: "https://randomuser.me/api/portraits/men/32.jpg", since: "Paziente dal 2023", text: "Consiglio vivamente il Dott. Neri: ascolto, empatia e soluzioni pratiche per ogni problema." },
+        { name: "Elena Gallo", avatar: "https://randomuser.me/api/portraits/women/12.jpg", since: "Paziente dal 2021", text: "Mi sono sentita accolta e mai giudicata. Ho imparato a gestire lo stress e a credere in me stessa." },
+        { name: "Simone Ricci", avatar: "https://randomuser.me/api/portraits/men/77.jpg", since: "Paziente dal 2022", text: "La terapia online è stata comodissima e altrettanto efficace. Grazie per la disponibilità e la flessibilità." },
+        { name: "Chiara Neri", avatar: "https://randomuser.me/api/portraits/women/21.jpg", since: "Paziente dal 2020", text: "Il percorso di mindfulness mi ha aiutato a ritrovare equilibrio e serenità nella vita quotidiana." },
+        { name: "Davide Moretti", avatar: "https://randomuser.me/api/portraits/men/41.jpg", since: "Paziente dal 2023", text: "Approccio concreto e personalizzato. Ho finalmente trovato un professionista di cui fidarmi." },
+        { name: "Sara Colombo", avatar: "https://randomuser.me/api/portraits/women/55.jpg", since: "Paziente dal 2022", text: "Grazie al supporto ricevuto, sono riuscita a superare momenti di grande difficoltà personale." },
+        { name: "Francesco Villa", avatar: "https://randomuser.me/api/portraits/men/23.jpg", since: "Paziente dal 2021", text: "Sedute sempre puntuali e ambiente accogliente. Consiglio il Dott. Neri a chiunque cerchi aiuto psicologico." }
+    ];
+
+    let currentTestimonial = 0;
+    let VISIBLE = window.innerWidth < 768 ? 1 : 2;
+    let CARD_WIDTH = window.innerWidth < 768 ? 320 : 370; // px
+    const GAP = 32; // px (gap-8 in Tailwind = 2rem = 32px)
+
+    function updateResponsiveVars() {
+        VISIBLE = window.innerWidth < 768 ? 1 : 2;
+        CARD_WIDTH = window.innerWidth < 768 ? 320 : 370;
+        // Sposta i bottoni più vicini al carosello su mobile
+        prevBtn.classList.toggle('-left-12', window.innerWidth >= 768);
+        prevBtn.classList.toggle('left-2', window.innerWidth < 768);
+        nextBtn.classList.toggle('-right-12', window.innerWidth >= 768);
+        nextBtn.classList.toggle('right-2', window.innerWidth < 768);
+        updateCarousel();
+        renderIndicators();
+    }
+
+    function renderTestimonials() {
+        carousel.innerHTML = '';
+        testimonials.forEach((t, idx) => {
+            const card = document.createElement('div');
+            card.className = "bg-white dark:bg-slate-800 rounded-xl p-8 shadow-sm flex-shrink-0";
+            card.style.width = CARD_WIDTH + "px";
+            card.innerHTML = `
+                <div class="flex items-center mb-4">
+                    <div class="text-sky-500 dark:text-sky-400 mr-2">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <p class="text-slate-600 dark:text-slate-300 italic mb-6">"${t.text}"</p>
+                <div class="flex items-center">
+                    <img src="${t.avatar}" alt="${t.name}" class="w-12 h-12 rounded-full mr-4 object-cover">
+                    <div>
+                        <h4 class="font-semibold text-slate-800 dark:text-white">${t.name}</h4>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm">${t.since}</p>
+                    </div>
+                </div>
+            `;
+            carousel.appendChild(card);
+        });
+        updateCarousel();
+        renderIndicators();
+    }
+
+    function updateCarousel() {
+        const offset = (CARD_WIDTH + GAP) * currentTestimonial;
+        carousel.style.transform = `translateX(-${offset}px)`;
+    }
+
+    function renderIndicators() {
+        indicators.innerHTML = '';
+        const total = testimonials.length - VISIBLE + 1;
+        for (let i = 0; i < total; i++) {
+            const dot = document.createElement('button');
+            dot.className = "w-3 h-3 rounded-full mx-1 " + (i === currentTestimonial ? "bg-sky-500 dark:bg-sky-300" : "bg-sky-200 dark:bg-slate-600");
+            dot.addEventListener('click', () => {
+                currentTestimonial = i;
+                updateCarousel();
+                renderIndicators();
+                resetInterval();
+            });
+            indicators.appendChild(dot);
+        }
+    }
+
+    function showPrev() {
+        if (currentTestimonial > 0) {
+            currentTestimonial--;
+        } else {
+            currentTestimonial = testimonials.length - VISIBLE;
+        }
+        updateCarousel();
+        renderIndicators();
+        resetInterval();
+    }
+    function showNext() {
+        if (currentTestimonial < testimonials.length - VISIBLE) {
+            currentTestimonial++;
+        } else {
+            currentTestimonial = 0;
+        }
+        updateCarousel();
+        renderIndicators();
+        resetInterval();
+    }
+
+    // Auto-scroll
+    let testimonialInterval = setInterval(() => {
+        if (currentTestimonial < testimonials.length - VISIBLE) {
+            currentTestimonial++;
+        } else {
+            currentTestimonial = 0;
+        }
+        updateCarousel();
+        renderIndicators();
+    }, 6000);
+
+    function resetInterval() {
+        clearInterval(testimonialInterval);
+        testimonialInterval = setInterval(() => {
+            if (currentTestimonial < testimonials.length - VISIBLE) {
+                currentTestimonial++;
+            } else {
+                currentTestimonial = 0;
+            }
+            updateCarousel();
+            renderIndicators();
+        }, 6000);
+    }
+
+    const carousel = document.getElementById('testimonial-carousel');
+    const prevBtn = document.getElementById('testimonial-prev');
+    const nextBtn = document.getElementById('testimonial-next');
+    const indicators = document.getElementById('testimonial-indicators');
+
+    prevBtn.addEventListener('click', showPrev);
+    nextBtn.addEventListener('click', showNext);
+
+    window.addEventListener('resize', () => {
+        updateResponsiveVars();
+    });
+
+    // Inizializza
+    updateResponsiveVars();
+    renderTestimonials();
+    </script>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 md:py-24 bg-white dark:bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mb-4">Contatta la segreteria per prenotare un appuntamento</h2>
+                <div class="w-20 h-1 bg-sky-500 mx-auto"></div>
+            </div>
+            <div class="md:flex md:space-x-8">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h3 class="text-2xl font-semibold text-slate-800 dark:text-white mb-6">Informazioni di contatto</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="bg-sky-100 dark:bg-slate-700 p-3 rounded-full mr-4">
+                                <i class="fas fa-map-marker-alt text-sky-600 dark:text-sky-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-slate-800 dark:text-white mb-1">Studio</h4>
+                                <p class="text-slate-600 dark:text-slate-300">Via Milano 123, 20100 Milano</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-sky-100 dark:bg-slate-700 p-3 rounded-full mr-4">
+                                <i class="fas fa-phone-alt text-sky-600 dark:text-sky-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-slate-800 dark:text-white mb-1">Telefono</h4>
+                                <p class="text-slate-600 dark:text-slate-300">+39 02 1234567</p>
+                                <p class="text-slate-500 dark:text-slate-400 text-sm">Lun-Ven, 9:00-18:00</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-sky-100 dark:bg-slate-700 p-3 rounded-full mr-4">
+                                <i class="fas fa-envelope text-sky-600 dark:text-sky-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-slate-800 dark:text-white mb-1">Email</h4>
+                                <p class="text-slate-600 dark:text-slate-300">info@dottneri.it</p>
+                                <p class="text-slate-500 dark:text-slate-400 text-sm">Risposta entro 24 ore</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-sky-100 dark:bg-slate-700 p-3 rounded-full mr-4">
+                                <i class="fab fa-whatsapp text-sky-600 dark:text-sky-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-slate-800 dark:text-white mb-1">WhatsApp</h4>
+                                <p class="text-slate-600 dark:text-slate-300">+39 345 6789012</p>
+                                <p class="text-slate-500 dark:text-slate-400 text-sm">Risposta entro poche ore</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-10">
+                        <h4 class="font-medium text-slate-800 dark:text-white mb-4">Seguimi sui social</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="bg-sky-100 dark:bg-slate-700 hover:bg-sky-200 dark:hover:bg-slate-600 text-sky-600 dark:text-sky-400 p-3 rounded-full transition-colors">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="bg-sky-100 dark:bg-slate-700 hover:bg-sky-200 dark:hover:bg-slate-600 text-sky-600 dark:text-sky-400 p-3 rounded-full transition-colors">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="bg-sky-100 dark:bg-slate-700 hover:bg-sky-200 dark:hover:bg-slate-600 text-sky-600 dark:text-sky-400 p-3 rounded-full transition-colors">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <form id="prenotaform" class="bg-sky-50 dark:bg-slate-700 rounded-xl p-6 md:p-8 shadow-sm">
+                        <h3 class="text-2xl font-semibold text-slate-800 dark:text-white mb-6">Prenota un appuntamento</h3>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nome</label>
+                                <input type="text" id="name" class="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:bg-slate-800 dark:text-white">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email</label>
+                                <input type="email" id="email" class="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:bg-slate-800 dark:text-white">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="phone" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Telefono</label>
+                            <input type="tel" id="phone" class="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:bg-slate-800 dark:text-white">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="service" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Servizio richiesto</label>
+                            <select id="service" class="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:bg-slate-800 dark:text-white">
+                                <option>Consulenza conoscitiva (30 min, €30)</option>
+                                <option>Percorso Individuale (60 min, €70)</option>
+                                <option>Percorso di Coppia (60 min, €90)</option>
+                                <option>Counseling (40 min, €50)</option>
+                                <option>Pacchetto 5 Sedute Individuali (€325, 7% sconto)</option>
+                                <option>Pacchetto 10 Sedute Individuali (€600, 14% sconto)</option>
+                                <option>Altre informazioni</option>
+                            </select>
+                        </div>
+                        <!-- SEZIONE DATA E ORA PREFERITE -->
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label for="preferred-date" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Data preferita</label>
+                                <input type="date" id="preferred-date" name="preferred-date" class="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:bg-slate-800 dark:text-white">
+                            </div>
+                            <div>
+                                <label for="preferred-time" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Orario preferito (9-19)</label>
+                                <input type="time" id="preferred-time" name="preferred-time" class="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:bg-slate-800 dark:text-white">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="message" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Messaggio</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:bg-slate-800 dark:text-white" placeholder="Descrivi brevemente la tua richiesta..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-sky-600 hover:bg-sky-700 text-white py-3 px-6 rounded-lg font-medium transition-colors">Invia richiesta</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 dark:bg-slate-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:flex md:justify-between md:items-center">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-2xl font-bold text-sky-400 mb-2">Studio Psicologico</h3>
+                    <p class="text-slate-400">Dott. Matteo Neri</p>
+                    <p class="text-slate-400 mt-2">Psicologo e Psicoterapeuta</p>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-8 sm:grid-cols-3">
+                    <div>
+                        <h4 class="text-sm font-semibold text-sky-400 uppercase tracking-wider mb-4">Navigazione</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#about" class="text-slate-400 hover:text-white transition-colors">Chi sono</a></li>
+                            <li><a href="#services" class="text-slate-400 hover:text-white transition-colors">Servizi</a></li>
+                            <li><a href="#approach" class="text-slate-400 hover:text-white transition-colors">Approccio</a></li>
+                            <li><a href="#contact" class="text-slate-400 hover:text-white transition-colors">Contatti</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-sm font-semibold text-sky-400 uppercase tracking-wider mb-4">Contatti</h4>
+                        <ul class="space-y-2">
+                            <li class="text-slate-400">Via Milano 123, Milano</li>
+                            <li class="text-slate-400">+39 02 1234567</li>
+                            <li class="text-slate-400">info@dottneri.it</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-sm font-semibold text-sky-400 uppercase tracking-wider mb-4">Orari</h4>
+                        <ul class="space-y-2">
+                            <li class="text-slate-400">Lun-Ven: 9:00-18:00</li>
+                            <li class="text-slate-400">Sab: 9:00-13:00</li>
+                            <li class="text-slate-400">Dom: Chiuso</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-slate-700 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-slate-400 text-sm mb-4 md:mb-0">© 2025 Studio Psicologico Dott. Matteo Neri. Tutti i diritti riservati.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-slate-400 hover:text-white transition-colors">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-slate-400 hover:text-white transition-colors">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-slate-400 hover:text-white transition-colors">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        dark: '#1F2937',
+                        light: '#F3F4F6',
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+        const themeText = document.getElementById('themeText');
+        const mobileThemeText = document.getElementById('mobileThemeText');
+        const themeIcon = document.getElementById('themeIcon');
+        const mobileThemeIcon = document.getElementById('mobileThemeIcon');
+        const html = document.documentElement;
+
+        // Funzione per aggiornare testo/icona tema
+        function updateThemeText(theme) {
+            if (themeText && themeIcon) {
+                if (theme === 'dark') {
+                    themeText.textContent = 'Notte';
+                    themeIcon.classList.replace('fa-sun', 'fa-moon');
+                } else {
+                    themeText.textContent = 'Giorno';
+                    themeIcon.classList.replace('fa-moon', 'fa-sun');
+                }
+            }
+            if (mobileThemeText && mobileThemeIcon) {
+                if (theme === 'dark') {
+                    mobileThemeText.textContent = 'Notte';
+                    mobileThemeIcon.classList.replace('fa-sun', 'fa-moon');
+                } else {
+                    mobileThemeText.textContent = 'Giorno';
+                    mobileThemeIcon.classList.replace('fa-moon', 'fa-sun');
+                }
+            }
+        }
+
+        // Check for saved theme preference or use preferred color scheme
+        let savedTheme = localStorage.getItem('color-theme');
+        if (!savedTheme) {
+            savedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        if (savedTheme === 'dark') {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+        updateThemeText(savedTheme);
+
+        // Toggle theme
+        function toggleTheme() {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+                updateThemeText('light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+                updateThemeText('dark');
+            }
+        }
+
+        if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+        if (mobileThemeToggle) mobileThemeToggle.addEventListener('click', toggleTheme);
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+
+        // Apri menu
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+            mobileMenuOverlay.classList.remove('hidden');
+        });
+
+        // Chiudi cliccando overlay
+        mobileMenuOverlay.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            mobileMenuOverlay.classList.add('hidden');
+        });
+        
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+
+        function handleBackToTopVisibility() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+                backToTopButton.classList.remove('hide');
+            } else {
+                backToTopButton.classList.remove('visible');
+                backToTopButton.classList.add('hide');
+            }
+        }
+        window.addEventListener('scroll', handleBackToTopVisibility);
+        window.addEventListener('load', handleBackToTopVisibility);
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    const offset = 80;
+                    const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({
+                        top: elementPosition,
+                        behavior: 'smooth'
+                    });
+                }
+
+                // Chiudi il mobile menu solo se il link è nel mobile menu e il menu è visibile
+                const isInMobileMenu = this.closest('#mobileMenu');
+                if (isInMobileMenu && !mobileMenu.classList.contains('hidden')) {
+                    setTimeout(() => {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenuOverlay.classList.add('hidden');
+                    }, 300); // tempo per lo scroll
+                }
+            });
+        });
+        
+        // Da inserire nello script dove c'è lo smooth scroll per anchor link
+        document.querySelectorAll('.prenota-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Solo su mobile (max-width: 767px)
+                if (window.innerWidth < 768) {
+                    const target = document.getElementById('prenotaform');
+                    if (target) {
+                        e.preventDefault();
+                        const offset = 80;
+                        const elementPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                        window.scrollTo({
+                            top: elementPosition,
+                            behavior: 'smooth'
+                        });
+                        // Chiudi il mobile menu se aperto
+                        const mobileMenu = document.getElementById('mobileMenu');
+                        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+                        if (mobileMenu && mobileMenuOverlay && !mobileMenu.classList.contains('hidden')) {
+                            setTimeout(() => {
+                                mobileMenu.classList.add('hidden');
+                                mobileMenuOverlay.classList.add('hidden');
+                            }, 300);
+                        }
+                    }
+                }
+                // Su desktop comportamento normale (ancora #contact)
+            });
+        });
+        
+        // Form submission
+        const contactForm = document.querySelector('form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Grazie per la tua richiesta! La segreteria ti contatterà al più presto per confermare l\'appuntamento.');
+                this.reset();
+            });
+        }
+        
+        // Animation on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.fade-in');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+    </script>
+    <script>
+    let startX = 0;
+    let deltaX = 0;
+    let isSwiping = false;
+
+    carousel.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+            startX = e.touches[0].clientX;
+            isSwiping = true;
+        }
+    });
+
+    carousel.addEventListener('touchmove', (e) => {
+        if (!isSwiping) return;
+        deltaX = e.touches[0].clientX - startX;
+    });
+
+    carousel.addEventListener('touchend', () => {
+        if (!isSwiping) return;
+        if (Math.abs(deltaX) > 50) { // Soglia swipe
+            if (deltaX < 0) {
+                showNext(); // Va avanti, anche in loop
+            } else if (deltaX > 0) {
+                showPrev(); // Va indietro, anche in loop
+            }
+        }
+        isSwiping = false;
+        deltaX = 0;
+    });
+    </script>
+</body>
+</html>
